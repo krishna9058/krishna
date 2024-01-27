@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Buy and sell for free</title>
+    <link rel="icon" href="./images/favicon.png">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- fontawesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- signin popup -->
+    <div id="signinPopup">
+        <div id="signinPopupContainer">
+            <div class="closeSigninPopupDiv">
+                <span id="closeSigninPopup">&times;</span>
+            </div>
+            <div class="headingDiv">
+                <br>
+                <span>Buy &amp; sell things easily with us</span>
+                <i></i>
+            </div>
+            <div id="signinWarning"></div>
+            <form id="signinForm">
+                <input type="email" placeholder="Email.." id="signinEmail" required>
+                <input type="password" placeholder="Passowrd.." id="signinPw" required>
+                <input type="submit" value="Sign in">
+            </form>
+            <p>Don't have an account? <a href="#" id="signupBtn">Sign up</a></p>
+        </div>
+    </div>
+
+    <!-- /signin popup -->
+
+    <!-- signup popup -->
+    <div id="signupPopup">
+        <div id="signupPopupContainer">
+            <div class="closeSignupPopupDiv">
+                <span id="closeSignupPopup">&times;</span>
+            </div>
+            <div class="headingDiv">
+                <span class="heading">Sign up</span>
+                <br>
+                <span>Buy &amp; sell things easily with .</span>
+            </div>
+            <div id="signupWarning"></div>
+            <form id="signupForm">
+                <input type="text" placeholder="Name.." id="signupName" required>
+                <input type="email" placeholder="Email.." id="signupEmail" required>
+                <input type="password" placeholder="Passowrd.." id="signupPw" required>
+                <input type="submit" value="Sign up">
+            </form>
+            <p>Already have an account? <a href="#" id="signinBtn_2">Sign in</a></p>
+        </div>
+    </div>
+    <!-- /signup popup -->
+
+    <!-- category popup -->
+    <div id="categoryPopup">
+        <div id="categoryPopupContainer">
+            <div class="closeCategoryPopupDiv">
+                <span id="closeCategoryPopup">&times;</span>
+            </div>
+            <div class="headingDiv">
+                <span class="heading">Choose Category</span>
+            </div>
+            <div id="warning">Please choose a category</div>
+            <form id="categoryForm">
+                <label class="radioContainer">notes
+                    <input type="radio" name="category" value="Mobiles">
+                    <span class="radioCheck"></span>
+                </label>
+                <label class="radioContainer">stationery
+                    <input type="radio" name="category" value="Vehicles">
+                    <span class="radioCheck"></span>
+                </label>
+                <label class="radioContainer">Electronics
+                    <input type="radio" name="category" value="Electronics">
+                    <span class="radioCheck"></span>
+                </label>
+                <label class="radioContainer">cycle
+                    <input type="radio" name="category" value="Bikes">
+                    <span class="radioCheck"></span>
+                </label>
+                <label class="radioContainer">book
+                    <input type="radio" name="category" value="Services">
+                    <span class="radioCheck"></span>
+                </label>
+                <label class="radioContainer">Drafter
+                    <input type="radio" name="category" value="Furniture">
+                    <span class="radioCheck"></span>
+                </label>
+                <input type="submit" value="next">
+            </form>
+        </div>
+    </div>
+    <!-- /category popup -->
+
+    <!-- sell popup -->
+    <div id="sellPopup">
+        <div id="sellPopupContainer">
+            <div class="closeSellPopupDiv">
+                <span id="backCategoryPopup"><i class="fas fa-arrow-left"></i></span>
+                <span id="closeSellPopup">&times;</span>
+            </div>
+            <div class="headingDiv">
+                <span class="heading">Post Your Ad</span>
+            </div>
+            <form id="sellForm">
+                <p id="categoryName"></p>
+                <input type="text" placeholder="Title.." id="adTitle" required>
+                <input type="text" placeholder="Description.." id="adDescription" required>
+                <input type="number" placeholder="Price.." id="adPrice" required>
+                <input type="number" placeholder="Phone number.." id="adPhone">
+                <input type="file" id="adImage" multiple>
+                <input type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+    <!-- /sell popup -->
+
+    <!-- ad details popup -->
+    <div id="adDetailsPopup">
+        <div id="adDetailsPopupContainer">
+            <div class="closeAdDetailsPopupDiv">
+                <span id="closeAdDetailsPopup">&times;</span>
+            </div>
+            <div class="left">
+                <div class="inLeft" id="AdDescAndImage">
+                    <h2 id="showAdDescriptionHeading"></h2>
+                    <div id="showAdImage"></div>
+                    <div class="showAdDescription">
+                        <p id="showAdDescriptionDesc"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="inRight">
+                    <div id="price"></div>
+                    <div class="sellerInfo">
+                        <h2>Seller Info</h2>
+                        <div id="sellerName"></div>
+                        <div id="sellerPhone"></div>
+                        <div class="chatWithSeller">
+                            <button id="chatWithSellerBtn">Chat with seller</button>
+                        </div>
+                    </div>
+                    <div id="deleteAdBtn">Delete Ad</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ad details popup -->
+
+    <div id="main">
+        <!-- header -->
+        <header>
+            <div class="top">
+                <div class="container">
+                    <div class="left">
+                        <div class="mainLogo">
+                            <a href="./index.html">
+                                <img src="rishu.png" alt="logo" width="70px"
+                            </a>
+                        </div>
+                        <div class="location">
+                            <!-- <i class="fas fa-globe-europe"></i> -->
+                            <input type="text" placeholder="Location..">
+                        </div>
+                        <div class="search">
+                            <div class="searchFieldDiv">
+                                <input type="text" placeholder="Search.." id="searchField">
+                            </div>
+                            <div class="searchBtnDiv">
+                                <button id="searchBtn"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="signinBtnDiv">
+                            <div class="dropdown">
+                    
+                                <div class="dropdownContent" id="dropdownContent">
+                                
+                                    <a href="javascript:void(0)" id="myAds">My Ads</a>
+                                    <a href="javascript:void(0)" id="favorites">Favorites</a>
+                                    <a href="javascript:void(0)" id="signoutBtn">Sign out</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sellBtnDiv">
+                            <button id="sellBtn">Sell</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="container">
+                    <div class="dropdown">
+                    
+    
+                        <a href="javascript:void(0)" id="browseCategories">Browse by Categories &nbsp; <i
+                                class="fas fa-angle-down"></i></a>
+                        <div class="dropdownContent">
+                            <a href="Javascript:void(0)" onclick="filter('All')">All Categories</a>
+                            <a href="Javascript:void(0)" onclick="filter('Mobiles')">drafter</a>
+                            <a href="Javascript:void(0)" onclick="filter('Vehicles')">cycle</a>
+                            <a href="Javascript:void(0)" onclick="filter('Electronics')">Electronics</a>
+                            <a href="Javascript:void(0)" onclick="filter('Bikes')">notes</a>
+                            <a href="Javascript:void(0)" onclick="filter('Services')">books</a>
+                            <a href="Javascript:void(0)" onclick="filter('Furniture')">pyqs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- /header -->
+
+        <!-- banner -->
+        <div class="mainBanner" id="mainBanner">
+            <img src="logo.png" alt="banner-image" id="mainBannerImg">
+        </div>
+        <!-- /banner -->
+
+        <!-- popular categories -->
+        <div class="popularCategories" id="popularCategories">
+            <div class="container">
+                <div class="heading">
+                    <h2>Popular Categories</h2>
+                    <hr>
+                    
+                </div>
+                <div class="categories">
+                    <div class="oneThird">
+                        <div class="top">
+                            <a href="javascript:void(0)" onclick="filter('Drafter')"><i class="fas fa-wrench"></i>
+                                &nbsp; Drafter</a>
+                            
+                        </div>
+                        <div class="bottom">
+                            <a href="javascript:void(0)">Tablets</a>
+                            <a href="javascript:void(0)">Accessories</a>
+                            <a href="javascript:void(0)">Mobile Phones</a>
+                        </div>
+                    </div>
+                    <div class="oneThird">
+                        <div class="top">
+                            <a href="javascript:void(0)" onclick="filter('Vehicles')"><i class="fas fa-bicycle"></i> &nbsp;
+                                cycle</a>
+                        </div>
+                        <div class="bottom">
+                            <a href="javascript:void(0)">Cars</a>
+                            <a href="javascript:void(0)">Buses</a>
+                            <a href="javascript:void(0)">Spare parts</a>
+                        </div>
+                    </div>
+                    <div class="oneThird">
+                        <div class="top">
+                            <a href="javascript:void(0)" onclick="filter('Electronics')"><i class="fas fa-tv"></i>
+                                &nbsp; Electronics</a>
+                        </div>
+                        <div class="bottom">
+                            <a href="javascript:void(0)">Cars</a>
+                            <a href="javascript:void(0)">Buses</a>
+                            <a href="javascript:void(0)">Spare parts</a>
+                        </div>
+                    </div>
+                    <div class="oneThird">
+                        </a>
+                        </div>
+                        <div class="bottom">
+                            <a href="javascript:void(0)">Cars</a>
+                            <a href="javascript:void(0)">Buses</a>
+                            <a href="javascript:void(0)">Spare parts</a>
+                        </div>
+                    </div>
+                    <div class="oneThird">
+                        </a>
+                        </div>
+                        <div class="bottom">
+            
+                        </div>
+                    </div>
+                    <div class="oneThird">
+                        </a>
+                        </div>
+                        <div class="bottom">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /popular categories -->
+
+        <!-- top picks for you -->
+        <div class="topPicks">
+            <div class="container" id="topPicksContainer">
+                <div class="heading">
+                    <h2 id="categoryHeading">Recently added</h2>
+                    <img src="https://rukminim2.flixcart.com/image/850/1000/kw2fki80/drafting-compass-set/m/k/6/engineering-kit-black-mini-drafter-sheet-container-3-in-1-original-imag8ty8av4zgwwr.jpeg?q=90&crop=false" alt="" width="150px">
+                    <img src="https://m.media-amazon.com/images/I/714C6dYmEYL.AC_UF1000,1000_QL80.jpg" alt="" width="150px">
+                    <img src="https://m.media-amazon.com/images/I/61fNoq7Y6+L.AC_UF894,1000_QL80.jpg" alt=""width="150px">
+                    <img src="https://imageio.forbes.com/specials-images/imageserve/5f85be4ed0acaafe77436710/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds" alt="" width="150px">
+                    <img src="https://5.imimg.com/data5/SELLER/Default/2023/10/350296047/AL/PX/AK/25006117/2-way-scientific-calculator-500x500.jpeg" alt="" width="150px">
+                    <img src="https://www.bigbasket.com/media/uploads/p/xxl/40198087_2-hp-cs10-wireless-keyboard-mouse.jpg" alt="" width="150px">
+
+
+                    <hr>
+                </div>
+                <div class="picks" id="picks">
+
+                </div>
+            </div>
+        </div>
+        <!-- /top picks for you -->
+
+        <!-- footer -->
+        <footer>
+            <div class="top">
+                <div class="container">
+                    <div class="oneFifth">
+                        <h3>Popular Categories</h3>
+                        <a href="#">book</a><br>
+                        <a href="#">notes</a><br>
+                        <a href="#">pyqs</a><br>
+                        <a href="#">mini drafter</a>
+                    </div>
+                    <div class="onesixth">
+                        <h3>Popular Searches</h3>
+                        <a href="#">mini drafter</a><br>
+                        <a href="#">stationery</a><br>
+                        <a href="#">Books</a><br>
+                        <a href="#">Electronics</a>
+                    </div>
+                    <div class="oneFifth">
+                        
+                    </div>
+                    <div class="oneFifth">
+                    </div>
+                    <div class="oneFifth footerSocial">
+                        <h3>Find us here</h3>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                
+                
+                        <span class="copyrights">
+                            Copyrights &copy; Buy or Sell x CSJMU, 2024.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /footer -->
+    </div>
+
+
+    <!-- service worker -->
+   
+</body>
+
+</html>
